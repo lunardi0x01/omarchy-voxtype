@@ -1,0 +1,32 @@
+# Local package: whisper.cpp HTTP server with Vulkan, for Voxtype remote mode.
+# Build locally with `makepkg -si`; not published to the AUR.
+pkgname=whisper-server-vulkan
+pkgver=1.9.5
+pkgrel=1
+pkgdesc="whisper.cpp HTTP transcription server (OpenAI-compatible endpoint), Vulkan build"
+arch=(x86_64)
+url="https://github.com/ggml-org/whisper.cpp"
+license=(MIT)
+depends=(vulkan-icd-loader gcc-libs glibc)
+makedepends=(cmake ninja git vulkan-headers spirv-headers shaderc)
+provides=(whisper-server)
+source=("whisper.cpp::git+https://github.com/ggml-org/whisper.cpp.git#tag=v${pkgver}")
+sha256sums=(SKIP)
+options=(!debug)
+
+build() {
+  cmake -S whisper.cpp -B build -G Ninja \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DBUILD_SHARED_LIBS=OFF \
+    -DGGML_VULKAN=ON \
+    -DGGML_NATIVE=ON \
+    -DGGML_CCACHE=OFF \
+    -DWHISPER_BUILD_TESTS=OFF \
+    -DWHISPER_BUILD_EXAMPLES=ON
+  cmake --build build --target whisper-server
+}
+
+package() {
+  install -Dm755 build/bin/whisper-server "$pkgdir/usr/bin/whisper-server"
+  install -Dm644 whisper.cpp/LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}

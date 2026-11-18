@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "lunardi0x01.voxtype",
+  "name": "My Voxtype",
+  "version": "0.1.0",
+  "description": "Voxtype dictation for Omarchy: recording and server status, microphone, vocabulary, history and stats.",
+  "author": "James Lunardi",
+  "license": "MIT",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "My Voxtype",
+    "description": "Dictation status, server reachability and Voxtype settings.",
+    "category": "Audio",
+    "allowMultiple": false,
+    "defaultSection": "right"
+  }
+}

@@ -1,0 +1,10 @@
+# My Voxtype machine settings. Copy to ~/.config/voxtype/my-voxtype.conf.
+# Sourced by post_process.sh, so use shell syntax.
+
+# Address of the dictation-correct service (server/dictation-correct). Leave
+# unset to never correct. Clean-up is switched on and off by the file
+# ~/.config/voxtype/correct-on.
+#CORRECT_URL=https://gpu-box.example.ts.net:9444/correct
+
+# Seconds to wait for it before typing the uncorrected text.
+#CORRECT_TIMEOUT=2.5

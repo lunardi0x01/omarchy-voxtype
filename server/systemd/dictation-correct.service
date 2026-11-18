@@ -1,0 +1,15 @@
+[Unit]
+Description=Dictation clean-up service (My Voxtype): a small LLM via Ollama
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 -I %h/.local/lib/dictation-correct/dictation-correctd.py
+Environment=DICTATION_LLM_MODEL=gemma4:e4b-it-qat
+Environment=CORRECT_PORT=9100
+# Optional: unload the model while this file exists (e.g. a game-mode flag).
+#Environment=GAME_MODE_FLAG=%t/game-mode
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target

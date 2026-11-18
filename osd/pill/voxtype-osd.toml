@@ -1,0 +1,20 @@
+name = "pill"
+version = "0.1.0"
+description = "Pill: a small outlined pill at the bottom centre with voice bars (My Voxtype)."
+compatibility = "voxtype quickshell style packages"
+palette = "omarchy"
+layout = "custom"
+qml_entry = "Pill.qml"
+
+[frame]
+background = "none"
+border = "none"
+glow = false
+halo = false
+
+# Fallback if the custom QML can't load: a plain voice line.
+[[visual.layers]]
+type = "line"
+source = "peak"
+color = "accent"
+order = 10

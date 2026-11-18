@@ -1,0 +1,20 @@
+name = "edge-glow"
+version = "0.1.0"
+description = "Edge glow: the screen edges glow in the theme accent while you dictate (My Voxtype)."
+compatibility = "voxtype quickshell style packages"
+palette = "omarchy"
+layout = "custom"
+qml_entry = "EdgeGlow.qml"
+
+[frame]
+background = "none"
+border = "none"
+glow = false
+halo = false
+
+# Fallback if the custom QML can't load: a plain voice line.
+[[visual.layers]]
+type = "line"
+source = "peak"
+color = "accent"
+order = 10
