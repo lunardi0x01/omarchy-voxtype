@@ -45,6 +45,21 @@ test("config output with replacements", () => {
   assert.equal(M.parseConfigOutput("garbage"), null);
 });
 
+test("pretty-printed config with nested objects", () => {
+  const config = {
+    "audio.pause_media": true,
+    profiles: { cortana: { vocabulary: { terms: [], note: "a } brace" } } },
+    "text.replacements": { "a Marche": "Omarchy" },
+    "whisper.language": "en",
+  };
+  const text = JSON.stringify(config, null, 2) + "\n\n"
+    + JSON.stringify({ replacements: { "a Marche": "Omarchy" } }, null, 2);
+  const parsed = M.parseConfigOutput(text);
+  assert.equal(parsed.config["whisper.language"], "en");
+  assert.equal(parsed.config["audio.pause_media"], true);
+  assert.equal(parsed.replacements["a Marche"], "Omarchy");
+});
+
 test("sources skip monitors", () => {
   const json = JSON.stringify([
     { name: "out.monitor", description: "Monitor of X", properties: { "device.class": "monitor" } },

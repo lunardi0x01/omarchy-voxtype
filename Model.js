@@ -98,9 +98,28 @@ function cleanChord(chord) {
 }
 
 // `voxtype config get --json` output, a blank line, then `config schema --json`.
+// Index of the "}" closing the first top-level JSON object in text, or -1.
+// Brace-matched (skipping strings) so nested objects such as [profiles.*] in
+// `config get --json` don't end the object early.
+function endOfFirstObject(text) {
+  var start = text.indexOf("{");
+  if (start < 0) return -1;
+  var depth = 0, inString = false;
+  for (var i = start; i < text.length; i++) {
+    var c = text.charAt(i);
+    if (inString) {
+      if (c === "\\") i++;
+      else if (c === "\"") inString = false;
+    } else if (c === "\"") inString = true;
+    else if (c === "{") depth++;
+    else if (c === "}" && --depth === 0) return i;
+  }
+  return -1;
+}
+
 function parseConfigOutput(text) {
   var raw = clip(text);
-  var cut = raw.indexOf("}\n");
+  var cut = endOfFirstObject(raw);
   if (cut < 0) return null;
   var config, schema;
   try { config = JSON.parse(raw.slice(0, cut + 1)) } catch (e) { return null }
