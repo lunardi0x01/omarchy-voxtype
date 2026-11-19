@@ -76,9 +76,10 @@ QtObject {
   readonly property string language: String(config["whisper.language"] || "en")
   readonly property bool osdEnabled: config["osd.enabled"] === true
   readonly property string osdStyle: String(config["osd.style"] || "default")
-  // Style packages only render on the Quickshell frontend; gtk4 (Voxtype's
-  // default) ignores osd.style and draws its own waveform.
-  readonly property bool osdQuickshell: config["osd.frontend"] === "quickshell"
+  // Style packages only render on the Quickshell frontend. gtk4 (the 1.2.1
+  // default) ignores osd.style and draws its own waveform; "auto" (the 1.2.2
+  // default) picks Quickshell, so it's left alone.
+  readonly property bool osdQuickshell: config["osd.frontend"] === "quickshell" || config["osd.frontend"] === "auto"
   readonly property bool pauseMedia: config["audio.pause_media"] === true
   readonly property string autoSubmit: config["output.auto_submit"] === true ? "always"
     : config["text.smart_auto_submit"] === true ? "say" : "off"
